@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abel Ferreira — Portfólio</title>
+<meta name="description" content="Portfólio não oficial feito por fã: a carreira e os títulos de Abel Ferreira, técnico do Palmeiras.">
+<meta name="theme-color" content="#04140d">
+<link rel="icon" href="assets/escudo-palmeiras.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   1. VARIÁVEIS (cores, fontes, medidas) — edite aqui para mudar a identidade
+   ========================================================================== */
+:root{
+  --green:#006437;        /* verde Palmeiras (base) */
+  --green-2:#00864a;      /* verde claro / brilhos */
+  --green-3:#0b3d2a;      /* verde escuro / superfícies */
+  --ink:#04140d;          /* fundo (quase preto esverdeado) */
+  --paper:#f4f1ea;        /* off-white */
+  --gold:#c9a24b;         /* dourado: SÓ troféus e destaques de título */
+  --muted:rgba(244,241,234,.74);
+  --line:rgba(244,241,234,.13);
+  --glass:rgba(244,241,234,.045);
+  --f-display:'Bebas Neue','Anton',Impact,'Arial Narrow',sans-serif;
+  --f-body:'Inter','Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --gutter:clamp(1.25rem,5vw,4rem);
+  --maxw:1240px;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+
+/* ==========================================================================
+   2. BASE
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:auto}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+html.is-loading,html.is-loading body{overflow:hidden}
+body{
+  margin:0;background:var(--ink);color:var(--paper);
+  font-family:var(--f-body);font-size:1rem;line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+h1,h2,h3,p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+:focus-visible{outline:2px solid var(--green-2);outline-offset:4px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:fixed;left:1rem;top:-4rem;z-index:200;background:var(--paper);color:var(--ink);padding:.6rem 1rem;border-radius:8px;font-weight:600}
+.skip:focus{top:1rem}
+
+/* grão fino + vinheta fixos sobre tudo (não interferem no clique) */
+body::before{
+  content:"";position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:89;pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.55) 100%);
+}
+
+.wrap{width:min(100% - var(--gutter)*2,var(--maxw));margin-inline:auto}
+section{position:relative}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:.7rem;font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--green-2);font-weight:600;
+}
+.eyebrow::before{content:"";width:2.2rem;height:1px;background:currentColor}
+.h2{
+  font-family:var(--f-display);font-weight:400;line-height:.92;letter-spacing:.01em;
+  font-size:clamp(3rem,9vw,7.2rem);margin-top:1rem;
+}
+.h2 em{font-style:normal;color:var(--gold)}
+.lead{color:var(--muted);max-width:52ch;margin-top:1.4rem;font-size:clamp(1rem,1.6vw,1.12rem)}
+.sec{padding:clamp(5rem,12vw,10rem) 0}
+
+/* máscara de texto (reveal por linha) */
+.mask{display:block;overflow:hidden;padding:.14em 0 .06em;margin-top:-.14em}
+.mask>span{display:block}
+
+/* ==========================================================================
+   3. LOADER
+   ========================================================================== */
+.loader{position:fixed;inset:0;z-index:300;display:grid;place-items:center}
+.loader.is-done{display:none}
+.loader__panel{position:absolute;top:0;bottom:0;width:50.2%;background:var(--ink);
+  background-image:radial-gradient(ellipse at 50% 50%,rgba(0,100,55,.35),transparent 70%)}
+.loader__panel--l{left:0}.loader__panel--r{right:0}
+.loader__center{position:relative;display:grid;justify-items:center;gap:1.4rem}
+.loader__crest{position:relative;width:clamp(120px,26vw,190px);aspect-ratio:1}
+.loader__crest img{position:absolute;inset:0;width:100%;height:100%}
+.loader__crest .base{filter:grayscale(1) brightness(.3)}
+.loader__crest .fill{clip-path:inset(100% 0 0 0)}
+.loader__crest::after{ /* pulso verde */
+  content:"";position:absolute;inset:-8%;border-radius:50%;border:1px solid var(--green-2);
+  animation:pulse 1.8s ease-out infinite;
+}
+.loader__count{font-family:var(--f-display);font-size:clamp(2.4rem,8vw,4rem);letter-spacing:.08em;line-height:1}
+.loader__count small{font-size:.5em;color:var(--green-2)}
+@keyframes pulse{0%{transform:scale(.9);opacity:.8}100%{transform:scale(1.35);opacity:0}}
+
+/* ==========================================================================
+   4. CURSOR CUSTOMIZADO (só em dispositivos com mouse)
+   ========================================================================== */
+.cursor{position:fixed;left:0;top:0;z-index:250;pointer-events:none;display:none;mix-blend-mode:screen}
+.cursor__ring{width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;
+  background:rgba(0,134,74,.35);border:1px solid var(--green-2);transition:background .3s}
+@media (hover:hover) and (pointer:fine){.cursor{display:block}}
+
+/* ==========================================================================
+   5. NAVEGAÇÃO
+   ========================================================================== */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;padding:1.1rem 0;transition:background .4s,padding .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
+.nav.is-scrolled{background:rgba(4,20,13,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:.65rem 0;border-color:var(--line)}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.brand{display:flex;align-items:center;gap:.75rem;font-family:var(--f-display);letter-spacing:.1em;font-size:1.3rem;line-height:1}
+.brand img{width:40px;height:40px;border-radius:50%;box-shadow:0 0 0 1px var(--line),0 0 22px rgba(0,134,74,.45)}
+.nav__links{display:flex;gap:clamp(1rem,2.4vw,2.2rem)}
+.nav__links a{position:relative;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.4rem 0;transition:color .3s}
+.nav__links a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--green-2);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.nav__links a:hover,.nav__links a.is-active{color:var(--paper)}
+.nav__links a.is-active::after{transform:scaleX(1)}
+.burger{display:none;width:44px;height:44px;position:relative;border-radius:50%;border:1px solid var(--line)}
+.burger span{position:absolute;left:12px;right:12px;height:2px;background:var(--paper);transition:transform .4s var(--ease)}
+.burger span:nth-child(1){top:17px}.burger span:nth-child(2){top:25px}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(4px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){transform:translateY(-4px) rotate(-45deg)}
+@media (max-width:900px){
+  .burger{display:block}
+  .nav__links{position:fixed;inset:0;z-index:-1;flex-direction:column;justify-content:center;align-items:center;gap:1.6rem;
+    background:rgba(4,20,13,.97);opacity:0;pointer-events:none;transition:opacity .4s}
+  .nav__links a{font-family:var(--f-display);font-size:2.6rem;letter-spacing:.06em;text-transform:none}
+  .nav.is-open .nav__links{opacity:1;pointer-events:auto}
+}
+
+/* ==========================================================================
+   6. BOTÕES
+   ========================================================================== */
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:.7rem;overflow:hidden;
+  padding:.95rem 1.6rem;border-radius:999px;border:1px solid var(--green-2);
+  font-weight:600;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;
+  background:linear-gradient(135deg,var(--green),var(--green-2));box-shadow:0 10px 40px -10px rgba(0,134,74,.7);
+  transition:box-shadow .4s;
+}
+.btn::before{ /* brilho que corre no hover */
+  content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);
+  transform:translateX(-120%);transition:transform .8s var(--ease);
+}
+.btn:hover::before{transform:translateX(120%)}
+.btn:hover{box-shadow:0 14px 50px -8px rgba(0,134,74,.95)}
+.btn--ghost{background:transparent;box-shadow:none;border-color:var(--line)}
+
+/* ==========================================================================
+   7. HERO
+   ========================================================================== */
+.hero{min-height:100svh;display:flex;align-items:flex-end;overflow:hidden;padding:6rem 0 3.5rem;isolation:isolate;
+  background:
+    radial-gradient(ellipse 60% 55% at 72% 38%,rgba(0,134,74,.34),transparent 70%),
+    radial-gradient(ellipse 80% 60% at 10% 100%,rgba(0,100,55,.28),transparent 70%),
+    linear-gradient(180deg,var(--ink),#061c12 60%,var(--ink));}
+.hero__glow{position:absolute;z-index:-1;right:2%;top:6%;width:min(70vw,720px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,134,74,.55),transparent 65%);filter:blur(30px);animation:breathe 6s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+.hero__crest-bg{position:absolute;z-index:-1;left:-8vw;top:14%;width:min(52vw,520px);opacity:.07;filter:grayscale(1);animation:float 9s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-18px) rotate(3deg)}}
+
+.hero__photo{position:absolute;z-index:0;right:max(2vw,calc(50% - 560px));bottom:0;width:min(46vw,540px);aspect-ratio:924/1233;will-change:transform}
+.hero__photo-inner{position:relative;width:100%;height:100%;
+  -webkit-mask-image:radial-gradient(ellipse 50% 54% at 50% 42%,#000 42%,transparent 100%);
+          mask-image:radial-gradient(ellipse 50% 54% at 50% 42%,#000 42%,transparent 100%)}
+.hero__photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(.5) contrast(1.12) brightness(.95)}
+.hero__photo-inner::after{ /* tinge verde integrado ao design */
+  content:"";position:absolute;inset:0;mix-blend-mode:multiply;
+  background:linear-gradient(165deg,rgba(0,134,74,.85),rgba(4,20,13,.75));
+}
+.hero__photo::before{ /* sombra/glow atrás do recorte */
+  content:"";position:absolute;inset:8% 6% 0;border-radius:50%;z-index:-1;
+  box-shadow:0 0 120px 20px rgba(0,134,74,.45);
+}
+
+.hero__content{position:relative;z-index:2}
+.hero__sub{display:flex;align-items:center;gap:.9rem;font-size:clamp(.78rem,1.6vw,.95rem);letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+.hero__sub img{width:30px;height:30px;border-radius:50%}
+.hero__title{font-family:var(--f-display);font-weight:400;line-height:.82;font-size:clamp(5rem,21vw,19rem);letter-spacing:.005em;margin:0}
+.hero__title .row{display:block;overflow:hidden;padding:.04em 0 .02em}
+.hero__title .ch{display:inline-block;will-change:transform}
+.hero__title .row--out{color:transparent;-webkit-text-stroke:2px var(--paper)}
+@media (max-width:600px){.hero__title .row--out{-webkit-text-stroke:1.2px var(--paper)}}
+.hero__cta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}
+.hero__scroll{position:absolute;z-index:2;right:var(--gutter);bottom:3.5rem;display:grid;justify-items:center;gap:.7rem;font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);writing-mode:vertical-rl}
+.hero__scroll i{display:block;width:1px;height:70px;background:var(--line);position:relative;overflow:hidden}
+.hero__scroll i::after{content:"";position:absolute;left:0;top:0;width:100%;height:40%;background:var(--green-2);animation:drip 1.8s var(--ease) infinite}
+@keyframes drip{0%{transform:translateY(-100%)}100%{transform:translateY(260%)}}
+.particles{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.particles i{position:absolute;border-radius:50%;background:var(--green-2);box-shadow:0 0 12px 2px rgba(0,134,74,.7);opacity:0}
+
+@media (max-width:760px){
+  .hero{padding-top:5rem}
+  .hero__photo{width:min(78vw,380px);right:50%;transform:translateX(50%);top:4.5rem;bottom:auto}
+  .hero__content{margin-top:min(88vw,430px)}
+  .hero__scroll{display:none}
+}
+
+/* ==========================================================================
+   8. MARQUEE
+   ========================================================================== */
+.marquee{overflow:hidden;border-block:1px solid var(--line);padding:1.1rem 0;background:rgba(0,100,55,.1)}
+.marquee__track{display:flex;width:max-content;animation:marquee 38s linear infinite}
+.marquee__track span{font-family:var(--f-display);font-size:clamp(1.8rem,5vw,3.4rem);letter-spacing:.06em;white-space:nowrap;padding-right:1.4rem;color:var(--paper)}
+.marquee__track span b{color:var(--green-2);font-weight:400;margin-left:1.4rem}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ==========================================================================
+   9. NÚMEROS
+   ========================================================================== */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:3rem;background:var(--line);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+@media (min-width:860px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{padding:clamp(1.6rem,3vw,2.6rem);background:linear-gradient(160deg,#0a2417,var(--ink));position:relative}
+.stat__n{font-family:var(--f-display);font-size:clamp(3.4rem,9vw,6.4rem);line-height:.95;color:var(--paper)}
+.stat__n.is-gold{color:var(--gold)}
+.stat__n small{font-size:.4em;letter-spacing:.1em;color:var(--green-2);margin-left:.15em}
+.stat__l{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.5rem}
+.stat__tbc{display:block;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--green-2);margin-top:.3rem}
+
+/* ==========================================================================
+   10. LINHA DO TEMPO
+   ========================================================================== */
+.tl{position:relative;margin-top:4rem;display:grid;gap:clamp(2rem,5vw,4rem)}
+.tl__line,.tl__fill{position:absolute;top:0;bottom:0;left:27px;width:2px;border-radius:2px}
+.tl__line{background:var(--line)}
+.tl__fill{background:linear-gradient(180deg,var(--green-2),var(--green));box-shadow:0 0 18px var(--green-2);transform:scaleY(0);transform-origin:top}
+.tl-item{position:relative;display:grid;grid-template-columns:56px 1fr;gap:1.2rem;align-items:start}
+.tl-node{grid-column:1;grid-row:1;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;
+  background:var(--ink);border:2px solid var(--line);font-family:var(--f-display);letter-spacing:.06em;font-size:1.05rem;
+  transition:border-color .5s,box-shadow .5s,color .5s;z-index:1;overflow:hidden}
+.tl-node img{width:100%;height:100%}
+.tl-item.is-on .tl-node{border-color:var(--green-2);box-shadow:0 0 0 6px rgba(0,134,74,.15),0 0 28px rgba(0,134,74,.6);color:var(--green-2)}
+.tl-card{grid-column:2;grid-row:1;padding:clamp(1.4rem,3vw,2.2rem);border-radius:20px;border:1px solid var(--line);
+  background:linear-gradient(160deg,rgba(244,241,234,.07),rgba(244,241,234,.02));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.tl-card__meta{display:flex;flex-wrap:wrap;gap:.5rem 1.2rem;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--green-2);font-weight:600}
+.tl-card h3{font-family:var(--f-display);font-weight:400;font-size:clamp(2rem,4.4vw,3rem);line-height:1;margin:.5rem 0 .2rem;letter-spacing:.02em}
+.tl-card__role{color:var(--muted);font-size:.95rem}
+.tl-card ul{margin-top:1rem;display:grid;gap:.5rem}
+.tl-card li{position:relative;padding-left:1.3rem;color:var(--paper);font-size:.95rem;opacity:.9}
+.tl-card li::before{content:"";position:absolute;left:0;top:.7em;width:.55rem;height:2px;background:var(--green-2)}
+.tl-item--now .tl-card{border-color:rgba(0,134,74,.55);box-shadow:0 0 60px -20px rgba(0,134,74,.7)}
+@media (min-width:900px){
+  .tl__line,.tl__fill{left:calc(50% - 1px)}
+  .tl-item{grid-template-columns:1fr 56px 1fr;gap:2rem}
+  .tl-node{grid-column:2}
+  .tl-item:nth-child(odd) .tl-card{grid-column:1}
+  .tl-item:nth-child(even) .tl-card{grid-column:3}
+  .tl-item:nth-child(odd) .tl-card{text-align:right}
+  .tl-item:nth-child(odd) .tl-card__meta{justify-content:flex-end}
+  .tl-item:nth-child(odd) .tl-card li{padding-left:0;padding-right:1.3rem}
+  .tl-item:nth-child(odd) .tl-card li::before{left:auto;right:0}
+}
+
+/* ==========================================================================
+   11. SALA DE TROFÉUS
+   ========================================================================== */
+.trophies{background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(201,162,75,.10),transparent 70%),radial-gradient(ellipse 60% 50% at 50% 100%,rgba(0,100,55,.25),transparent 70%)}
+.confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:3}
+.confetti i{position:absolute;top:0;width:8px;height:14px;background:var(--gold);opacity:0;border-radius:2px}
+.filters{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:2rem}
+.chip{padding:.6rem 1.2rem;border-radius:999px;border:1px solid var(--line);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--muted);transition:background .3s,color .3s,border-color .3s}
+.chip:hover{border-color:var(--gold);color:var(--paper)}
+.chip[aria-pressed="true"]{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.chip small{opacity:.6;margin-left:.35rem}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:1.2rem;margin-top:2.6rem;position:relative}
+.tcard{perspective:900px}
+@media (min-width:900px){.tgrid{grid-template-columns:repeat(3,1fr)}}
+.tcard.is-hidden{display:none}
+.tcard__in{position:relative;overflow:hidden;height:100%;padding:1.6rem 1.4rem 1.5rem;border-radius:22px;border:1px solid rgba(201,162,75,.22);
+  background:linear-gradient(165deg,rgba(244,241,234,.07),rgba(4,20,13,.6));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transform-style:preserve-3d;text-align:center}
+.tcard__shine{position:absolute;left:50%;top:50%;width:140%;aspect-ratio:1;margin:-70% 0 0 -70%;border-radius:50%;pointer-events:none;opacity:0;
+  background:radial-gradient(circle,rgba(255,236,170,.28),transparent 60%);transition:opacity .4s}
+.tcard:hover .tcard__shine{opacity:1}
+.tcard__art{position:relative;width:118px;margin:.4rem auto 1rem;transform:translateZ(40px)}
+.tcard__art svg{width:100%;height:auto;filter:drop-shadow(0 8px 14px rgba(0,0,0,.5))}
+.tcard__art::before{content:"";position:absolute;inset:-18%;border-radius:50%;z-index:-1;background:radial-gradient(circle,rgba(201,162,75,.55),transparent 65%);animation:glow 3.2s ease-in-out infinite}
+.tcard:nth-child(2n) .tcard__art::before{animation-delay:-1.4s}
+@keyframes glow{0%,100%{opacity:.35;transform:scale(.9)}50%{opacity:.95;transform:scale(1.08)}}
+.spark{position:absolute;width:10px;height:10px;opacity:0;animation:twinkle 2.8s ease-in-out infinite}
+.spark::before,.spark::after{content:"";position:absolute;left:50%;top:50%;background:#ffe9a8;transform:translate(-50%,-50%)}
+.spark::before{width:100%;height:2px}.spark::after{width:2px;height:100%}
+.tcard:hover .spark{animation-duration:1.1s}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.3)}50%{opacity:1;transform:scale(1)}}
+.tcard__year{font-family:var(--f-display);font-size:3.2rem;line-height:1;color:var(--gold);transform:translateZ(30px)}
+.tcard__comp{font-weight:600;margin-top:.2rem;transform:translateZ(20px)}
+.tcard__tag{display:inline-block;margin-top:.7rem;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:.25rem .7rem;border-radius:999px}
+
+/* ==========================================================================
+   12. ERA PALMEIRAS
+   ========================================================================== */
+.era{background:linear-gradient(180deg,transparent,rgba(0,100,55,.16) 30%,rgba(0,100,55,.16) 70%,transparent)}
+.era__head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1.5rem}
+.arrows{display:flex;gap:.7rem}
+.arrow{width:54px;height:54px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:background .3s,border-color .3s}
+.arrow:hover{background:var(--green);border-color:var(--green-2)}
+.arrow svg{width:20px;height:20px}
+.rail{display:flex;gap:1.2rem;margin-top:2.6rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 max(var(--gutter),calc((100vw - var(--maxw))/2)) 1.6rem;
+  scroll-padding-inline:max(var(--gutter),calc((100vw - var(--maxw))/2));scrollbar-width:thin;scrollbar-color:var(--green) transparent;overscroll-behavior-x:contain}
+.rail::-webkit-scrollbar{height:6px}.rail::-webkit-scrollbar-thumb{background:var(--green);border-radius:6px}
+.moment{flex:0 0 min(84vw,430px);scroll-snap-align:start;position:relative;overflow:hidden;min-height:400px;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:1.8rem;border-radius:24px;border:1px solid var(--line);
+  background:radial-gradient(ellipse 90% 60% at 80% 0%,rgba(0,134,74,.35),transparent 70%),linear-gradient(180deg,rgba(244,241,234,.05),rgba(4,20,13,.9))}
+.moment__year{position:absolute;right:1.2rem;top:.2rem;font-family:var(--f-display);font-size:7.5rem;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(244,241,234,.22)}
+.moment__tag{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--green-2);font-weight:600}
+.moment h3{font-family:var(--f-display);font-weight:400;font-size:2.4rem;line-height:1;margin:.4rem 0 .6rem}
+.moment p{color:var(--muted);font-size:.95rem}
+.moment__ico{position:absolute;left:1.6rem;top:1.6rem;width:46px;height:46px;border-radius:50%;animation:float 7s ease-in-out infinite}
+.bars{margin-top:3rem;display:grid;gap:1.4rem;max-width:760px}
+.bar__top{display:flex;justify-content:space-between;gap:1rem;font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.bar__top b{color:var(--paper);font-weight:600}
+.bar__track{height:10px;border-radius:10px;background:var(--line);overflow:hidden}
+.bar__fill{height:100%;width:100%;border-radius:10px;transform-origin:left;transform:scaleX(var(--v,0));background:linear-gradient(90deg,var(--green),var(--green-2))}
+.bar--gold .bar__fill{background:linear-gradient(90deg,#8d6f2a,var(--gold))}
+
+/* ==========================================================================
+   13. FILOSOFIA
+   ========================================================================== */
+.manifesto{min-height:100svh;display:grid;place-items:center;padding:6rem 0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(0,134,74,.22),transparent 70%)}
+.manifesto__text{font-family:var(--f-display);font-size:clamp(2.6rem,8.2vw,7rem);line-height:1;text-align:center;max-width:16ch;margin-inline:auto}
+.manifesto__text .w{display:inline-block;opacity:.16;margin-right:.22em}
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:1.2rem;margin-top:3rem}
+.pillar{padding:1.8rem;border-radius:22px;border:1px solid var(--line);background:linear-gradient(165deg,rgba(244,241,234,.06),rgba(244,241,234,.01));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.pillar__n{font-family:var(--f-display);font-size:3.4rem;line-height:1;color:var(--green-2)}
+.pillar h3{font-family:var(--f-display);font-weight:400;font-size:2rem;margin:.4rem 0 .5rem;letter-spacing:.03em}
+.pillar p{color:var(--muted);font-size:.95rem}
+
+/* ==========================================================================
+   14. RODAPÉ
+   ========================================================================== */
+.foot{padding:5rem 0 2.5rem;text-align:center;border-top:1px solid var(--line);background:radial-gradient(ellipse 70% 80% at 50% 100%,rgba(0,100,55,.35),transparent 70%)}
+.foot__crest{width:110px;margin:0 auto 1.4rem;border-radius:50%;animation:crestpulse 3s ease-in-out infinite}
+@keyframes crestpulse{0%,100%{box-shadow:0 0 0 0 rgba(0,134,74,.55)}70%{box-shadow:0 0 0 26px rgba(0,134,74,0)}}
+.foot h2{font-family:var(--f-display);font-weight:400;font-size:clamp(2.4rem,7vw,4.6rem);line-height:1}
+.foot p{color:var(--muted);margin-top:.6rem;font-size:.9rem}
+.social{display:flex;justify-content:center;flex-wrap:wrap;gap:.8rem;margin:2rem 0}
+.social a{padding:.55rem 1.2rem;border:1px solid var(--line);border-radius:999px;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;transition:border-color .3s,background .3s}
+.social a:hover{border-color:var(--green-2);background:rgba(0,134,74,.18)}
+.foot small{display:block;margin-top:2.4rem;color:rgba(244,241,234,.5);font-size:.74rem;max-width:62ch;margin-inline:auto}
+
+/* ==========================================================================
+   15. MOVIMENTO REDUZIDO
+   ========================================================================== */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .manifesto__text .w{opacity:1}
+  .marquee__track{transform:none}
+}
+</style>
+</head>
+
+<body>
+<a class="skip" href="#numeros">Pular para o conteúdo</a>
+
+<!-- Gradientes SVG reutilizados pelos troféus -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff0b8"/><stop offset=".35" stop-color="#e2bd62"/>
+      <stop offset=".7" stop-color="#c9a24b"/><stop offset="1" stop-color="#8d6f2a"/>
+    </linearGradient>
+    <linearGradient id="goldDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b8903a"/><stop offset="1" stop-color="#6e531c"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- LOADER -->
+<div class="loader" id="loader" role="status" aria-label="Carregando">
+  <div class="loader__panel loader__panel--l"></div>
+  <div class="loader__panel loader__panel--r"></div>
+  <div class="loader__center">
+    <div class="loader__crest">
+      <img class="base" src="assets/escudo-palmeiras.png" alt="" width="190" height="190">
+      <img class="fill" src="assets/escudo-palmeiras.png" alt="Escudo do Palmeiras" width="190" height="190">
+    </div>
+    <div class="loader__count"><span id="loaderNum">0</span><small>%</small></div>
+  </div>
+</div>
+
+<!-- CURSOR CUSTOMIZADO -->
+<div class="cursor" id="cursor" aria-hidden="true"><div class="cursor__ring"></div></div>
+
+<!-- NAVEGAÇÃO -->
+<header class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#hero" data-hover aria-label="Voltar ao início">
+      <img src="assets/escudo-palmeiras.png" alt="Escudo do Palmeiras" width="40" height="40">
+      <span>ABEL FERREIRA</span>
+    </a>
+    <nav class="nav__links" id="navLinks" aria-label="Principal"></nav>
+    <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="hero" aria-label="Abel Ferreira, técnico do Palmeiras">
+    <div class="hero__glow"></div>
+    <img class="hero__crest-bg" src="assets/escudo-palmeiras.png" alt="" aria-hidden="true">
+    <div class="particles" id="particles" aria-hidden="true"></div>
+    <div class="hero__photo" id="heroPhoto">
+      <div class="hero__photo-inner">
+        <!-- FOTO DO ABEL: troque o arquivo em assets/abel-ferreira.jpg -->
+        <img src="assets/abel-ferreira.jpg" alt="Retrato de Abel Ferreira, de terno escuro e gravata azul" width="924" height="1233" fetchpriority="high">
+      </div>
+    </div>
+    <div class="wrap hero__content">
+      <p class="hero__sub" id="heroSub"><img src="assets/escudo-palmeiras.png" alt="" width="30" height="30"><span data-text="heroSub"></span></p>
+      <h1 class="hero__title" id="heroTitle" aria-label="Abel Ferreira">
+        <span class="row" data-split="ABEL" aria-hidden="true"></span>
+        <span class="row row--out" data-split="FERREIRA" aria-hidden="true"></span>
+      </h1>
+      <div class="hero__cta">
+        <a class="btn" href="#trofeus" data-magnetic data-hover>Ver os títulos</a>
+        <a class="btn btn--ghost" href="#carreira" data-magnetic data-hover>A carreira</a>
+      </div>
+    </div>
+    <div class="hero__scroll" aria-hidden="true"><span>Role</span><i></i></div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true"><div class="marquee__track" id="marquee"></div></div>
+
+  <!-- NÚMEROS -->
+  <section class="sec" id="numeros" aria-labelledby="t-num">
+    <div class="wrap">
+      <span class="eyebrow" data-reveal>Em números</span>
+      <h2 class="h2" id="t-num"><span class="mask"><span data-mask>O que a<em> carreira</em></span></span><span class="mask"><span data-mask>já entregou</span></span></h2>
+      <div class="stats" id="stats"></div>
+    </div>
+  </section>
+
+  <!-- LINHA DO TEMPO -->
+  <section class="sec" id="carreira" aria-labelledby="t-car">
+    <div class="wrap">
+      <span class="eyebrow" data-reveal>Carreira</span>
+      <h2 class="h2" id="t-car"><span class="mask"><span data-mask>De Penafiel</span></span><span class="mask"><span data-mask>ao <em>Palestra</em></span></span></h2>
+      <p class="lead" data-reveal>Do menino em Portugal ao técnico que reescreveu a história recente do Palmeiras.</p>
+      <div class="tl" id="timeline">
+        <div class="tl__line" aria-hidden="true"></div>
+        <div class="tl__fill" id="tlFill" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SALA DE TROFÉUS -->
+  <section class="sec trophies" id="trofeus" aria-labelledby="t-tro">
+    <div class="confetti" id="confetti" aria-hidden="true"></div>
+    <div class="wrap">
+      <span class="eyebrow" data-reveal>Sala de troféus</span>
+      <h2 class="h2" id="t-tro"><span class="mask"><span data-mask>Títulos que</span></span><span class="mask"><span data-mask>viram <em>história</em></span></span></h2>
+      <div class="filters" id="filters" role="group" aria-label="Filtrar por competição"></div>
+      <div class="tgrid" id="tgrid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ERA PALMEIRAS -->
+  <section class="sec era" id="era" aria-labelledby="t-era">
+    <div class="wrap era__head">
+      <div>
+        <span class="eyebrow" data-reveal>Era Palmeiras</span>
+        <h2 class="h2" id="t-era"><span class="mask"><span data-mask>Momentos que</span></span><span class="mask"><span data-mask>marcaram <em>época</em></span></span></h2>
+      </div>
+      <div class="arrows">
+        <button class="arrow" id="prev" aria-label="Momento anterior" data-hover><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button class="arrow" id="next" aria-label="Próximo momento" data-hover><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+    <div class="rail" id="rail" tabindex="0" aria-label="Momentos marcantes (role para o lado)"></div>
+    <div class="wrap"><div class="bars" id="bars"></div></div>
+  </section>
+
+  <!-- FILOSOFIA -->
+  <section id="filosofia" aria-labelledby="t-fil">
+    <div class="manifesto" id="manifesto">
+      <div class="wrap"><h2 class="manifesto__text" id="t-fil"></h2></div>
+    </div>
+    <div class="wrap sec" style="padding-top:0">
+      <span class="eyebrow" data-reveal>Filosofia</span>
+      <div class="pillars" id="pillars"></div>
+    </div>
+  </section>
+</main>
+
+<!-- RODAPÉ -->
+<footer class="foot">
+  <div class="wrap">
+    <img class="foot__crest" src="assets/escudo-palmeiras.png" alt="Escudo do Palmeiras" width="110" height="110" loading="lazy">
+    <h2>ABEL FERREIRA</h2>
+    <p>Portfólio não oficial feito por fã</p>
+    <div class="social" id="social"></div>
+    <button class="btn btn--ghost" id="toTop" data-magnetic data-hover>Voltar ao topo ↑</button>
+    <small>Projeto sem fins lucrativos e sem vínculo com o Palmeiras ou com Abel Ferreira. Escudo e imagem pertencem aos seus respectivos titulares.</small>
+  </div>
+</footer>
+
+<noscript><p style="padding:2rem;text-align:center">Este portfólio precisa de JavaScript para exibir o conteúdo.</p></noscript>
+
+<!-- Bibliotecas (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+
+<script>
+/* ==========================================================================
+   DADOS — TODO O CONTEÚDO DO SITE FICA AQUI. Edite à vontade.
+   Itens marcados com "CONFIRMAR" são períodos, jogos ou números que precisam
+   ser checados em fonte oficial antes de publicar. `null` = placeholder.
+   ========================================================================== */
+const data = {
+  name: 'ABEL FERREIRA',
+  subtitle: 'Técnico do Palmeiras',
+
+  nav: [
+    { id: 'numeros',  label: 'Números' },
+    { id: 'carreira', label: 'Carreira' },
+    { id: 'trofeus',  label: 'Troféus' },
+    { id: 'era',      label: 'Era Palmeiras' },
+    { id: 'filosofia',label: 'Filosofia' },
+  ],
+
+  marquee: ['LIBERTADORES', 'BRASILEIRÃO', 'COPA DO BRASIL', 'RECOPA', 'SUPERCOPA', 'PAULISTÃO'],
+
+  // Início no Palmeiras — CONFIRMAR data exata (anunciado no fim de out/2020)
+  palmeirasStart: '2020-10-30',
+
+  // Contadores. `value: null` mostra "—" + aviso "a confirmar".
+  stats: [
+    { id: 'titulos', label: 'Títulos no Palmeiras', value: 'AUTO_TITULOS', gold: true },  // calculado a partir de data.trophies
+    { id: 'anos',    label: 'Anos de Palmeiras',    value: 'AUTO_ANOS' },                 // calculado a partir de palmeirasStart (anos completos)
+    { id: 'clubes',  label: 'Clubes como técnico',  value: null },                        // CONFIRMAR: preencher com o número oficial
+    { id: 'jogos',   label: 'Jogos no Palmeiras',   value: null },                        // CONFIRMAR: preencher com o número oficial
+  ],
+
+  // Linha do tempo. `badge` = iniciais no selo; use `crest: true` para o escudo do Palmeiras.
+  timeline: [
+    { badge: 'PEN', club: 'Penafiel', country: 'Portugal', period: '1978',
+      role: 'Origem',
+      // CONFIRMAR: data de nascimento (22/12/1978) e detalhes da formação
+      feats: ['Nasceu em Penafiel, no norte de Portugal.', 'Foi ali que começou a relação com o futebol.'] },
+    { badge: 'JOG', club: 'Carreira de jogador', country: 'Portugal', period: 'Período a confirmar',
+      role: 'Jogador profissional',
+      // CONFIRMAR: clubes, posições e temporadas
+      feats: ['Atuou em clubes portugueses antes de virar treinador.', 'Lista de clubes e temporadas: a confirmar.'] },
+    { badge: 'POR', club: 'Primeiros passos como treinador', country: 'Portugal', period: 'Período a confirmar',
+      role: 'Comissões técnicas e primeiros comandos',
+      // CONFIRMAR: clubes, funções e anos exatos
+      feats: ['Construiu a base da carreira no banco ainda em Portugal.', 'Clubes, funções e títulos: a confirmar.'] },
+    { badge: 'PAOK', club: 'PAOK', country: 'Grécia', period: '2019 – 2020',
+      role: 'Treinador principal',
+      // CONFIRMAR: período exato e campanhas
+      feats: ['Primeira grande experiência fora de Portugal.', 'Campanhas e resultados: a confirmar.'] },
+    { badge: '', crest: true, now: true, club: 'Palmeiras', country: 'Brasil', period: '2020 – hoje',
+      role: 'Treinador principal',
+      // CONFIRMAR: data de chegada e jogos
+      feats: ['Chegou em 2020 e conquistou a Libertadores logo no primeiro ano.',
+              'Bicampeão da Libertadores (2020 e 2021) e bicampeão brasileiro (2022 e 2023).',
+              'Soma os títulos listados na Sala de Troféus deste portfólio.'] },
+  ],
+
+  // Troféus. cat: internacional | nacional | estadual. kind = formato do SVG.
+  trophies: [
+    { comp: 'Copa Libertadores',        year: 2020, cat: 'internacional', kind: 'libertadores' },
+    { comp: 'Copa do Brasil',           year: 2020, cat: 'nacional',      kind: 'copa' },
+    { comp: 'Copa Libertadores',        year: 2021, cat: 'internacional', kind: 'libertadores' },
+    { comp: 'Recopa Sul-Americana',     year: 2022, cat: 'internacional', kind: 'recopa' },
+    { comp: 'Campeonato Paulista',      year: 2022, cat: 'estadual',      kind: 'paulista' },
+    { comp: 'Campeonato Brasileiro',    year: 2022, cat: 'nacional',      kind: 'brasileirao' },
+    { comp: 'Supercopa do Brasil',      year: 2023, cat: 'nacional',      kind: 'supercopa' },
+    { comp: 'Campeonato Brasileiro',    year: 2023, cat: 'nacional',      kind: 'brasileirao' },
+    { comp: 'Campeonato Paulista',      year: 2024, cat: 'estadual',      kind: 'paulista' },
+  ],
+  filters: [
+    { key: 'todos', label: 'Todos' },
+    { key: 'internacional', label: 'Internacional' },
+    { key: 'nacional', label: 'Nacional' },
+    { key: 'estadual', label: 'Estadual' },
+  ],
+
+  // Momentos da Era Palmeiras (carrossel). CONFIRMAR placares, datas e locais antes de publicar.
+  moments: [
+    { year: '2020', tag: 'Libertadores', title: 'Campeão da América',
+      text: 'Final no Maracanã contra o Santos, decidida nos acréscimos. O primeiro grande título de uma era.' },       // CONFIRMAR placar/data
+    { year: '2020', tag: 'Copa do Brasil', title: 'A Copa do Brasil',
+      text: 'O título nacional que veio na mesma temporada de estreia. Detalhes da decisão: a confirmar.' },           // CONFIRMAR decisão
+    { year: '2021', tag: 'Libertadores', title: 'Bi em Montevidéu',
+      text: 'Nova final brasileira, decidida na prorrogação, e o bicampeonato continental.' },                          // CONFIRMAR placar/data
+    { year: '2021', tag: 'Mundial de Clubes', title: 'A final contra o Chelsea',
+      text: 'Chegou à decisão do Mundial de Clubes e saiu com o vice, em jogo equilibrado até o fim.' },               // CONFIRMAR edição/placar
+    { year: '2022', tag: 'Brasileirão', title: 'Campeão brasileiro',
+      text: 'A consistência de uma temporada inteira transformada em título nacional.' },
+    { year: '2023', tag: 'Brasileirão', title: 'Bicampeonato nacional',
+      text: 'Repetiu o feito e confirmou a força do elenco ao longo do ano.' },
+  ],
+
+  // Barras animadas. Os "Títulos por escopo" são calculados dos dados reais.
+  // Linhas com value:null aparecem vazias e como "a confirmar" — nada inventado.
+  bars: [
+    { label: 'Títulos internacionais', auto: 'internacional', gold: true },
+    { label: 'Títulos nacionais',      auto: 'nacional',      gold: true },
+    { label: 'Títulos estaduais',      auto: 'estadual',      gold: true },
+    { label: 'Aproveitamento no Palmeiras', value: null, unit: '%' }, // CONFIRMAR
+    { label: 'Vitórias no Palmeiras',       value: null, unit: '%' }, // CONFIRMAR
+  ],
+
+  // Frase de impacto (texto próprio) e pilares da filosofia. Revise o tom se quiser.
+  manifesto: 'Vencer é hábito construído no detalhe, repetido todo dia.',
+  pillars: [
+    { title: 'Identidade de jogo', text: 'Um time organizado, que sabe o que fazer com e sem a bola e não depende de improviso para competir.' },
+    { title: 'Intensidade',        text: 'Ritmo alto, ocupação de espaços e vontade de decidir cada disputa. Os jogos grandes pedem energia até o último minuto.' },
+    { title: 'Disciplina',         text: 'Rotina, cuidado com o detalhe e responsabilidade coletiva. O talento rende mais quando há método.' },
+    { title: 'Mentalidade vencedora', text: 'Foco no próximo jogo, convivência com a pressão e a ideia de que o título se constrói todos os dias.' },
+  ],
+
+  // Redes: troque href="#" pelos links reais.
+  social: [
+    { label: 'Instagram', href: '#' },
+    { label: 'X / Twitter', href: '#' },
+    { label: 'YouTube', href: '#' },
+  ],
+};
+
+/* ==========================================================================
+   UTILITÁRIOS
+   ========================================================================== */
+const $  = (s, c = document) => c.querySelector(s);
+const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const hasGSAP = !!(window.gsap && window.ScrollTrigger);
+const animate = hasGSAP && !reduce;
+
+/* ==========================================================================
+   TROFÉUS EM SVG — um formato por conquista (viewBox 100x120)
+   ========================================================================== */
+const TROPHY = {
+  // Taça alta com alças grandes e estrela
+  libertadores: `<path d="M26 14h48v26c0 17-11 28-24 28S26 57 26 40z" fill="url(#gold)"/>
+    <path d="M26 20C8 20 8 48 28 52M74 20c18 0 18 28-2 32" fill="none" stroke="url(#gold)" stroke-width="5" stroke-linecap="round"/>
+    <path d="M46 68h8v18h-8z" fill="url(#goldDark)"/><path d="M34 86h32l4 12H30z" fill="url(#gold)"/>
+    <rect x="28" y="98" width="44" height="10" rx="2" fill="url(#goldDark)"/>
+    <path d="M50 26l3.6 7.4 8.1 1.1-5.9 5.6 1.5 8L50 44.2l-7.3 3.9 1.5-8-5.9-5.6 8.1-1.1z" fill="#fff4cc" opacity=".85"/>`,
+  // Taça larga, copa
+  copa: `<path d="M24 16h52l-4 26c-2 14-12 22-22 22s-20-8-22-22z" fill="url(#gold)"/>
+    <path d="M24 22c-12 0-12 18 2 22M76 22c12 0 12 18-2 22" fill="none" stroke="url(#gold)" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M45 64h10v16H45z" fill="url(#goldDark)"/><path d="M32 80h36l-3 12H35z" fill="url(#gold)"/>
+    <rect x="30" y="92" width="40" height="14" rx="2" fill="url(#goldDark)"/><path d="M36 28h28" stroke="#fff4cc" stroke-width="2" opacity=".6"/>`,
+  // Coluna com bola no topo
+  brasileirao: `<circle cx="50" cy="28" r="20" fill="url(#gold)"/>
+    <path d="M50 14l9 6.5-3.5 10.6H44.500L41 20.500z" fill="url(#goldDark)" opacity=".8"/>
+    <path d="M36 44c6 5 22 5 28 0l4 38H32z" fill="url(#gold)"/>
+    <path d="M28 82h44l4 12H24z" fill="url(#goldDark)"/><rect x="22" y="94" width="56" height="12" rx="2" fill="url(#gold)"/>`,
+  // Taça com alças simétricas e escudo
+  recopa: `<path d="M30 14h40v22c0 18-9 28-20 28S30 54 30 36z" fill="url(#gold)"/>
+    <path d="M30 20C14 20 12 42 32 48M70 20c16 0 18 22-2 28" fill="none" stroke="url(#gold)" stroke-width="5" stroke-linecap="round"/>
+    <path d="M50 22l12 5v10c0 8-5 13-12 16-7-3-12-8-12-16V27z" fill="#fff4cc" opacity=".35"/>
+    <path d="M46 64h8v14h-8z" fill="url(#goldDark)"/><path d="M30 78h40l2 28H28z" fill="url(#gold)"/>`,
+  // Taça pequena sobre pedestal
+  supercopa: `<path d="M32 22h36l-3 20c-1.5 11-8 17-15 17s-13.500-6-15-17z" fill="url(#gold)"/>
+    <path d="M32 26c-9 0-9 14 1 17M68 26c9 0 9 14-1 17" fill="none" stroke="url(#gold)" stroke-width="4" stroke-linecap="round"/>
+    <path d="M46 59h8v12h-8z" fill="url(#goldDark)"/><rect x="34" y="71" width="32" height="8" rx="2" fill="url(#gold)"/>
+    <rect x="26" y="79" width="48" height="22" rx="3" fill="url(#goldDark)"/><path d="M34 90h32" stroke="#fff4cc" stroke-width="2" opacity=".5"/>`,
+  // Taça-bacia aberta
+  paulista: `<path d="M16 24h68c0 22-14 38-34 38S16 46 16 24z" fill="url(#gold)"/>
+    <ellipse cx="50" cy="24" rx="34" ry="6" fill="url(#goldDark)" opacity=".7"/>
+    <path d="M45 62h10v18H45z" fill="url(#goldDark)"/><path d="M30 80h40l4 14H26z" fill="url(#gold)"/>
+    <rect x="24" y="94" width="52" height="12" rx="2" fill="url(#goldDark)"/>`,
+};
+const trophySVG = kind => `<svg viewBox="0 0 100 120" role="img" aria-hidden="true">${TROPHY[kind] || TROPHY.copa}</svg>`;
+
+/* ==========================================================================
+   CÁLCULOS A PARTIR DOS DADOS (nada inventado)
+   ========================================================================== */
+const totalTitles = data.trophies.length;
+const countCat = c => data.trophies.filter(t => t.cat === c).length;
+const fullYearsSince = iso => {
+  const s = new Date(iso), n = new Date();
+  let y = n.getFullYear() - s.getFullYear();
+  if (n.getMonth() < s.getMonth() || (n.getMonth() === s.getMonth() && n.getDate() < s.getDate())) y--;
+  return y;
+};
+
+/* ==========================================================================
+   RENDERIZAÇÃO (monta o HTML a partir de `data`)
+   ========================================================================== */
+function render() {
+  // Nav
+  $('#navLinks').innerHTML = data.nav.map(n => `<a href="#${n.id}" data-hover data-link="${n.id}">${n.label}</a>`).join('');
+  $('[data-text="heroSub"]').textContent = data.subtitle;
+
+  // Título do hero: letra por letra
+  $$('[data-split]').forEach(row => {
+    row.innerHTML = [...row.dataset.split].map(c => `<span class="ch">${c}</span>`).join('');
+  });
+
+  // Marquee (conteúdo duplicado = loop infinito)
+  const m = data.marquee.map(t => `<span>${t}<b>•</b></span>`).join('');
+  $('#marquee').innerHTML = m + m;
+
+  // Estatísticas
+  $('#stats').innerHTML = data.stats.map(s => {
+    let v = s.value;
+    if (v === 'AUTO_TITULOS') v = totalTitles;
+    if (v === 'AUTO_ANOS') v = fullYearsSince(data.palmeirasStart);
+    const num = v == null
+      ? `<div class="stat__n">—</div><span class="stat__tbc">a confirmar</span>`
+      : `<div class="stat__n ${s.gold ? 'is-gold' : ''}" data-count="${v}">0</div>`;
+    return `<div class="stat" data-reveal>${num}<div class="stat__l">${s.label}</div></div>`;
+  }).join('');
+
+  // Linha do tempo
+  $('#timeline').insertAdjacentHTML('beforeend', data.timeline.map(t => `
+    <article class="tl-item ${t.now ? 'tl-item--now' : ''}">
+      <div class="tl-node" aria-hidden="true">${t.crest ? '<img src="assets/escudo-palmeiras.png" alt="" loading="lazy">' : t.badge}</div>
+      <div class="tl-card">
+        <div class="tl-card__meta"><span>${t.period}</span><span>${t.country}</span></div>
+        <h3>${t.club}</h3>
+        <p class="tl-card__role">${t.role}</p>
+        <ul>${t.feats.map(f => `<li>${f}</li>`).join('')}</ul>
+      </div>
+    </article>`).join(''));
+
+  // Filtros e troféus
+  $('#filters').innerHTML = data.filters.map((f, i) => {
+    const n = f.key === 'todos' ? totalTitles : countCat(f.key);
+    return `<button class="chip" data-hover data-filter="${f.key}" aria-pressed="${i === 0}">${f.label}<small>${n}</small></button>`;
+  }).join('');
+  const sparks = [[12,18],[84,12],[88,52],[8,60],[72,30]].map(([x,y],i) => `<span class="spark" style="left:${x}%;top:${y}%;animation-delay:${-i*.6}s"></span>`).join('');
+  $('#tgrid').innerHTML = data.trophies.map(t => `
+    <div class="tcard" data-cat="${t.cat}">
+      <div class="tcard__in" data-hover>
+        <div class="tcard__shine"></div>${sparks}
+        <div class="tcard__art">${trophySVG(t.kind)}</div>
+        <div class="tcard__year">${t.year}</div>
+        <div class="tcard__comp">${t.comp}</div>
+        <span class="tcard__tag">${t.cat}</span>
+      </div>
+    </div>`).join('');
+
+  // Carrossel
+  $('#rail').innerHTML = data.moments.map(m => `
+    <article class="moment">
+      <img class="moment__ico" src="assets/escudo-palmeiras.png" alt="" loading="lazy">
+      <span class="moment__year" aria-hidden="true">${m.year}</span>
+      <span class="moment__tag">${m.tag}</span>
+      <h3>${m.title}</h3>
+      <p>${m.text}</p>
+    </article>`).join('');
+
+  // Barras
+  $('#bars').innerHTML = data.bars.map(b => {
+    let val = b.value, label, frac;
+    if (b.auto) { val = countCat(b.auto); frac = val / totalTitles; label = `${val} de ${totalTitles}`; }
+    else if (val == null) { frac = 0; label = 'a confirmar'; }
+    else { frac = val / 100; label = val + (b.unit || ''); }
+    return `<div class="bar ${b.gold ? 'bar--gold' : ''}" data-reveal>
+      <div class="bar__top"><span>${b.label}</span><b>${label}</b></div>
+      <div class="bar__track"><div class="bar__fill" style="--v:${frac}"></div></div></div>`;
+  }).join('');
+
+  // Manifesto e pilares
+  $('#t-fil').innerHTML = data.manifesto.split(' ').map(w => `<span class="w">${w}</span>`).join(' ');
+  $('#pillars').innerHTML = data.pillars.map((p, i) => `
+    <div class="pillar" data-reveal><div class="pillar__n">0${i + 1}</div><h3>${p.title}</h3><p>${p.text}</p></div>`).join('');
+
+  // Redes
+  $('#social').innerHTML = data.social.map(s => `<a href="${s.href}" data-hover data-magnetic>${s.label}</a>`).join('');
+}
+
+/* ==========================================================================
+   COMPORTAMENTOS SEM DEPENDÊNCIA DE ANIMAÇÃO
+   ========================================================================== */
+let lenis = null;
+const scrollToEl = (target) => {
+  const el = typeof target === 'string' ? $(target) : target;
+  if (!el) return;
+  if (lenis) lenis.scrollTo(el, { duration: 1.6 });
+  else el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+};
+
+function initBasics() {
+  // Nav: estilo ao rolar + menu mobile
+  const nav = $('#nav'), burger = $('#burger');
+  const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 40);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  burger.addEventListener('click', () => {
+    const open = nav.classList.toggle('is-open');
+    burger.setAttribute('aria-expanded', open);
+  });
+
+  // Links âncora (usam o scroll suave quando disponível)
+  $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (id.length < 2) return;
+    e.preventDefault();
+    nav.classList.remove('is-open'); burger.setAttribute('aria-expanded', 'false');
+    scrollToEl(id);
+  }));
+  $('#toTop').addEventListener('click', () => scrollToEl('#hero'));
+
+  // Seção ativa na navegação
+  const links = $$('[data-link]');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) links.forEach(l => l.classList.toggle('is-active', l.dataset.link === en.target.id));
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  data.nav.forEach(n => { const s = document.getElementById(n.id); if (s) io.observe(s); });
+
+  // Carrossel: setas
+  const rail = $('#rail');
+  const step = () => (rail.querySelector('.moment')?.offsetWidth || 400) + 20;
+  $('#prev').addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: reduce ? 'auto' : 'smooth' }));
+  $('#next').addEventListener('click', () => rail.scrollBy({ left:  step(), behavior: reduce ? 'auto' : 'smooth' }));
+
+  // Filtros de troféus (com Flip quando disponível)
+  const chips = $$('.chip'), cards = $$('.tcard');
+  chips.forEach(chip => chip.addEventListener('click', () => {
+    chips.forEach(c => c.setAttribute('aria-pressed', c === chip));
+    const key = chip.dataset.filter;
+    const useFlip = animate && window.Flip;
+    const state = useFlip ? Flip.getState(cards) : null;
+    cards.forEach(c => c.classList.toggle('is-hidden', key !== 'todos' && c.dataset.cat !== key));
+    if (useFlip) {
+      Flip.from(state, {
+        duration: .8, ease: 'power3.inOut', absolute: true, stagger: .04, scale: true,
+        onEnter: els => gsap.fromTo(els, { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .6, delay: .15 }),
+        onLeave: els => gsap.to(els, { opacity: 0, scale: .6, duration: .4 }),
+      });
+    }
+    ScrollTrigger?.refresh?.();
+  }));
+
+  // Estado final para quem não tem animação
+  if (!animate) {
+    $$('[data-count]').forEach(el => el.textContent = el.dataset.count);
+  }
+}
+
+/* ==========================================================================
+   MOVIMENTO (GSAP + ScrollTrigger + Lenis)
+   ========================================================================== */
+function initMotion() {
+  gsap.registerPlugin(ScrollTrigger);
+  if (window.Flip) gsap.registerPlugin(Flip);
+  const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+  /* ---- Scroll suave com inércia ---- */
+  if (window.Lenis) {
+    lenis = new Lenis({ lerp: .09, wheelMultiplier: .95 });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+    lenis.stop(); // liberado quando o loader terminar
+  }
+
+  /* ---- Cursor customizado ---- */
+  if (fine) {
+    const c = $('#cursor'), ring = $('.cursor__ring');
+    const xTo = gsap.quickTo(c, 'x', { duration: .35, ease: 'power3' });
+    const yTo = gsap.quickTo(c, 'y', { duration: .35, ease: 'power3' });
+    addEventListener('pointermove', e => { xTo(e.clientX); yTo(e.clientY); });
+    const grow = on => gsap.to(ring, { scale: on ? 2 : 1, duration: .35, ease: 'power3' });
+    document.addEventListener('pointerover', e => { if (e.target.closest('a,button,[data-hover]')) grow(true); });
+    document.addEventListener('pointerout',  e => { if (e.target.closest('a,button,[data-hover]')) grow(false); });
+  }
+
+  /* ---- Botões magnéticos ---- */
+  if (fine) $$('[data-magnetic]').forEach(el => {
+    el.addEventListener('pointermove', e => {
+      const r = el.getBoundingClientRect();
+      gsap.to(el, { x: (e.clientX - r.left - r.width / 2) * .3, y: (e.clientY - r.top - r.height / 2) * .4, duration: .4, ease: 'power3' });
+    });
+    el.addEventListener('pointerleave', () => gsap.to(el, { x: 0, y: 0, duration: .8, ease: 'elastic.out(1,.4)' }));
+  });
+
+  /* ---- Partículas verdes do hero ---- */
+  const pc = $('#particles');
+  for (let i = 0; i < 26; i++) {
+    const p = document.createElement('i');
+    const s = gsap.utils.random(2, 6);
+    p.style.cssText = `width:${s}px;height:${s}px;left:${gsap.utils.random(0, 100)}%;top:${gsap.utils.random(20, 100)}%`;
+    pc.appendChild(p);
+    gsap.to(p, { y: () => -gsap.utils.random(120, 360), x: () => gsap.utils.random(-50, 50), opacity: gsap.utils.random(.3, .9),
+      duration: gsap.utils.random(5, 10), repeat: -1, yoyo: true, ease: 'sine.inOut', delay: gsap.utils.random(0, 4) });
+  }
+
+  /* ---- Parallax da foto (scroll + mouse) ---- */
+  const photo = $('#heroPhoto');
+  gsap.to(photo, { yPercent: 14, ease: 'none',
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('.hero__title', { yPercent: -18, ease: 'none',
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('.hero__glow', { yPercent: 25, ease: 'none',
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
+  if (fine) {
+    const mx = gsap.quickTo('.hero__photo-inner', 'x', { duration: 1.2, ease: 'power3' });
+    const my = gsap.quickTo('.hero__photo-inner', 'y', { duration: 1.2, ease: 'power3' });
+    addEventListener('pointermove', e => { mx((e.clientX / innerWidth - .5) * -26); my((e.clientY / innerHeight - .5) * -18); });
+  }
+
+  /* ---- Reveals genéricos ---- */
+  $$('[data-reveal]').forEach(el => gsap.from(el, { y: 36, opacity: 0, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 88%', once: true } }));
+  $$('[data-mask]').forEach(el => gsap.from(el, { yPercent: 110, duration: 1.1, ease: 'power4.out',
+    scrollTrigger: { trigger: el, start: 'top 90%', once: true } }));
+
+  /* ---- Contadores ---- */
+  $$('[data-count]').forEach(el => {
+    const end = +el.dataset.count, o = { v: 0 };
+    ScrollTrigger.create({ trigger: el, start: 'top 90%', once: true, onEnter: () =>
+      gsap.to(o, { v: end, duration: 2.2, ease: 'power2.out', onUpdate: () => el.textContent = Math.round(o.v) }) });
+  });
+
+  /* ---- Linha do tempo: linha que se desenha + cards alternados ---- */
+  gsap.to('#tlFill', { scaleY: 1, ease: 'none',
+    scrollTrigger: { trigger: '#timeline', start: 'top 55%', end: 'bottom 60%', scrub: .6 } });
+  const wide = matchMedia('(min-width:900px)').matches;
+  $$('.tl-item').forEach((item, i) => {
+    const dir = wide ? (i % 2 === 0 ? -1 : 1) : 1;
+    gsap.from($('.tl-card', item), { x: dir * 70, opacity: 0, duration: 1.1, ease: 'power3.out',
+      scrollTrigger: { trigger: item, start: 'top 82%', once: true } });
+    ScrollTrigger.create({ trigger: item, start: 'top 60%', onEnter: () => item.classList.add('is-on'),
+      onLeaveBack: () => item.classList.remove('is-on') });
+  });
+
+  /* ---- Troféus: entrada, tilt 3D e confete ---- */
+  gsap.from('.tcard', { y: 60, opacity: 0, scale: .92, duration: .9, stagger: .09, ease: 'power3.out',
+    scrollTrigger: { trigger: '#tgrid', start: 'top 85%', once: true } });
+  if (fine) $$('.tcard').forEach(card => {
+    const inner = $('.tcard__in', card), shine = $('.tcard__shine', card);
+    card.addEventListener('pointermove', e => {
+      const r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      gsap.to(inner, { rotateX: (.5 - y) * 16, rotateY: (x - .5) * 16, transformPerspective: 900, duration: .4, ease: 'power2.out' });
+      gsap.to(shine, { x: (x - .5) * r.width * .8, y: (y - .5) * r.height * .8, duration: .4 });
+    });
+    card.addEventListener('pointerleave', () => gsap.to(inner, { rotateX: 0, rotateY: 0, duration: .8, ease: 'elastic.out(1,.5)' }));
+  });
+  const confetti = $('#confetti');
+  ScrollTrigger.create({ trigger: '#trofeus', start: 'top 55%', once: true, onEnter: () => {
+    const h = confetti.offsetHeight;
+    for (let i = 0; i < 38; i++) {
+      const p = document.createElement('i'); confetti.appendChild(p);
+      p.style.left = gsap.utils.random(2, 98) + '%';
+      p.style.background = gsap.utils.random(['#c9a24b', '#e2bd62', '#fff0b8']);
+      gsap.fromTo(p, { y: -30, opacity: 0, rotation: 0 },
+        { y: Math.min(h, 900) * gsap.utils.random(.45, .95), opacity: 1, rotation: gsap.utils.random(-540, 540),
+          x: gsap.utils.random(-60, 60), duration: gsap.utils.random(2.4, 4), delay: gsap.utils.random(0, 1.2), ease: 'power1.in',
+          onComplete: () => gsap.to(p, { opacity: 0, duration: .5, onComplete: () => p.remove() }) });
+    }
+  } });
+
+  /* ---- Era Palmeiras: cards do carrossel e barras ---- */
+  gsap.from('.moment', { x: 80, opacity: 0, duration: 1, stagger: .12, ease: 'power3.out',
+    scrollTrigger: { trigger: '#rail', start: 'top 85%', once: true } });
+  $$('.bar__fill').forEach(f => gsap.from(f, { scaleX: 0, duration: 1.6, ease: 'power3.out',
+    scrollTrigger: { trigger: f, start: 'top 92%', once: true } }));
+
+  /* ---- Filosofia: seção fixada, palavras acendem conforme o scroll ---- */
+  gsap.timeline({ scrollTrigger: { trigger: '#manifesto', start: 'top top', end: '+=120%', pin: true, scrub: .6 } })
+    .to('.manifesto__text .w', { opacity: 1, stagger: .5, ease: 'none' });
+
+  /* ---- Rodapé ---- */
+  gsap.from('.foot .wrap > *', { y: 30, opacity: 0, stagger: .1, duration: .9, ease: 'power3.out',
+    scrollTrigger: { trigger: '.foot', start: 'top 85%', once: true } });
+
+  addEventListener('load', () => ScrollTrigger.refresh());
+}
+
+/* ==========================================================================
+   LOADER + INTRO DO HERO
+   ========================================================================== */
+function runLoader() {
+  const loader = $('#loader'), num = $('#loaderNum');
+  const done = () => { loader.classList.add('is-done'); document.documentElement.classList.remove('is-loading'); };
+  if (!animate) { done(); return; }
+
+  document.documentElement.classList.add('is-loading');
+  const state = { p: 0 };
+  const hero = gsap.timeline({ paused: true });
+  hero.from('.nav', { yPercent: -100, opacity: 0, duration: 1, ease: 'power3.out' }, 0)
+      .from('#heroPhoto', { opacity: 0, scale: 1.08, duration: 1.6, ease: 'power3.out' }, 0)
+      .from('.hero__sub', { y: 20, opacity: 0, duration: .9, ease: 'power3.out' }, .2)
+      .from('.hero__title .ch', { yPercent: 120, rotate: 4, duration: 1.1, stagger: .045, ease: 'power4.out' }, .3)
+      .from('.hero__cta > *', { y: 24, opacity: 0, stagger: .1, duration: .8, ease: 'power3.out' }, .9)
+      .from('.hero__scroll', { opacity: 0, duration: 1 }, 1.2);
+  // estado inicial do hero escondido enquanto o loader roda
+  hero.progress(0);
+
+  gsap.timeline()
+    .to(state, { p: 100, duration: 2.4, ease: 'power2.inOut',
+      onUpdate: () => num.textContent = Math.round(state.p) }, 0)
+    .to('.loader__crest .fill', { clipPath: 'inset(0% 0 0 0)', duration: 2.4, ease: 'power2.inOut' }, 0)
+    .to('.loader__center', { scale: 1.15, opacity: 0, duration: .6, ease: 'power2.in', delay: .25 })
+    .to('.loader__panel--l', { xPercent: -100, duration: 1.1, ease: 'power4.inOut' }, '>-0.1')
+    .to('.loader__panel--r', { xPercent: 100,  duration: 1.1, ease: 'power4.inOut',
+      onStart: () => hero.play() }, '<')
+    .add(() => { done(); lenis?.start(); ScrollTrigger.refresh(); });
+}
+
+/* ==========================================================================
+   INÍCIO
+   ========================================================================== */
+render();
+initBasics();
+if (animate) initMotion();
+runLoader();
+</script>
+</body>
+</html>
